@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Anggota Kelas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #928DAB; 
+            background-image: linear-gradient(135deg, #e8e7ed 0%, #928DAB 100%);
+            color: #1F1C2D; 
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #D4D2DE;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #928DAB;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7a7593; 
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="app-container" class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        
+        <div id="home-page" class="fade-in">
+            <header class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-[#1F1C2D]">Data Anggota Kelas</h1>
+                <p class="text-[#1F1C2D]/70 mt-2">Klik pada kartu untuk melihat detail lengkap.</p>
+            </header>
+
+            
+            <section id="wali-kelas-section" class="mb-10">
+                <h2 class="text-2xl font-bold text-center text-[#1F1C2D] mb-4">Wali Kelas</h2>
+                <div id="wali-kelas-card-container" class="flex justify-center">
+                    
+                </div>
+            </section>
+            
+            
+            <hr class="border-t-2 border-[#928DAB]/50 my-8">
+
+            
+            <section id="siswa-section">
+                 <h2 class="text-2xl font-bold text-center text-[#1F1C2D] mb-4">Siswa</h2>
+                <main id="member-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+                    
+                </main>
+            </section>
+        </div>
+
+        
+        <div id="detail-page" class="hidden fade-in">
+            <header class="flex justify-between items-center mb-6">
+                 
+                <nav>
+                    <button id="back-button" class="bg-white/80 backdrop-blur-sm text-[#1F1C2D] hover:bg-white font-semibold py-2 px-4 border border-white/50 rounded-lg shadow-sm transition-colors duration-200 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        Kembali
+                    </button>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <img src="images/petro.jpg" alt="Logo Kelas" class="w-12 h-12 md:w-16 md:h-16 rounded-full shadow-md border-2 border-white/50">
+                    <img src="images/migas.jpg" alt="Logo Sekolah" class="w-12 h-12 md:w-16 md:h-16 rounded-full shadow-md border-2 border-white/50">
+                </div>
+            </header>
+            
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 md:p-8 border border-white/50">
+                
+                <div class="flex flex-col md:flex-row items-center md:items-start mb-8">
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-[#928DAB] rounded-full flex-shrink-0 mb-4 md:mb-0 md:mr-8 shadow-lg" id="detail-avatar">
+                        <
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h2 class="text-2xl md:text-3xl font-bold text-[#1F1C2D]" id="detail-nama"></h2>
+                        <p class="text-[#1F1C2D]/80 text-lg" id="detail-kelas"></p>
+                        
+                        <div class="mt-4 space-y-2 text-[#1F1C2D]">
+                            <p><strong>No. Absen:</strong> <span id="detail-absen"></span></p>
+                            <p><strong>Asal Daerah:</strong> <span id="detail-daerah"></span></p>
+                            <p><strong>Instagram:</strong> <a href="#" id="detail-instagram" target="_blank" class="text-[#928DAB] hover:underline font-semibold"></a></p>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="border-t border-[#D4D2DE] pt-6">
+                    <h3 class="text-xl font-semibold text-[#1F1C2D]">Fakta Unik Daerah Asal</h3>
+                    <p class="text-[#1F1C2D]/70 mt-1 mb-4">Dapatkan fakta menarik tentang <span id="daerah-name-fact" class="font-semibold"></span> menggunakan AI.</p>
+                    <button id="ai-fact-button" class="bg-[#928DAB] text-white hover:bg-opacity-90 font-semibold py-2 px-5 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                        Cari Fakta Unik!
+                    </button>
+                    <div id="ai-fact-result-container" class="mt-4 p-4 bg-[#D4D2DE]/50 rounded-lg border border-[#D4D2DE] min-h-[80px] hidden">
+                        <div id="ai-fact-loading" class="flex items-center space-x-2 text-[#928DAB] hidden">
+                            <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <span>Mencari fakta menarik...</span>
+                        </div>
+                        <p id="ai-fact-text" class="text-[#1F1C2D]"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const namaKelas = "XI TEKNIK PENGOLAHAN MIGAS & PETROKIMIA - A";
+        const anggotaKelas = [
+            { id: 1, absen: 'Wali Kelas', nama: 'PRASAKTI NUR AZIZAH', kelas: namaKelas, instagram: 'prasaktinurazizah', daerah: 'Yogyakarta', foto: 'images/sakti.jpg' },
+            { id: 2, absen: 1, nama: 'ABYAN BAHY DZAKY', kelas: namaKelas, instagram: 'abyanbahydzaky', daerah: 'Cepu', foto: 'images/abyan.jpg' },
+            { id: 3, absen: 2, nama: 'AFRIA NURSEHA DISTIANSA', kelas: namaKelas, instagram: 'sehwot', daerah: 'Cepu', foto: 'images/seha.jpg' },
+            { id: 4, absen: 3, nama: 'AHMAD RIZKY ANNUR AL AFLANA', kelas: namaKelas, instagram: 'ahmadriskyannur_smkmigascepu', daerah: 'Lamongan', foto: 'images/frisky.jpg' },
+            { id: 5, absen: 4, nama: 'AISYA ATIKA SALMA AL ABRORI', kelas: namaKelas, instagram: '_jyzqw.asa', daerah: 'Cepu', foto: 'images/asa.jpg' },
+            { id: 6, absen: 5, nama: 'ALVIAN ZAKI DE AZZURRI', kelas: namaKelas, instagram: 'bospocita', daerah: 'Cepu', foto: 'images/alvian.jpg' },
+            { id: 7, absen: 6, nama: 'ALVIANO FADHILLAH ILHAM', kelas: namaKelas, instagram: 'alfdlnoo', daerah: 'Cepu', foto: 'images/alviano.jpg' },
+            { id: 8, absen: 7, nama: 'ANDHIKA ALIVINO ADETYAWAN', kelas: namaKelas, instagram: 'andhikaa.saja', daerah: 'Cepu', foto: 'images/andhika.jpg' },
+            { id: 9, absen: 8, nama: 'ARAYA SANDRINA RAMADHANI', kelas: namaKelas, instagram: 'doubvt', daerah: 'Balikpapan', foto: 'images/araya.jpg' },
+            { id: 10, absen: 9, nama: 'AURELIA VANDA SISWANTO', kelas: namaKelas, instagram: 'elliowy_', daerah: 'Cepu', foto: 'images/aurel.jpg' },
+            { id: 11, absen: 10, nama: 'BIMA SATRIA PUTRA FIRDAUS', kelas: namaKelas, instagram: 'blekii.3gp', daerah: 'Surakarta', foto: 'images/bima.jpg' },
+            { id: 12, absen: 11, nama: 'CALLISTA RAMADHANI KIRANA PUTRI', kelas: namaKelas, instagram: 'cac4mar1.cahey', daerah: 'Rembang', foto: 'images/caca.jpg' },
+            { id: 13, absen: 12, nama: 'CANTIKA CAHAYA QURANI', kelas: namaKelas, instagram: 'encan.yn', daerah: 'Surabaya', foto: 'images/cantika.jpg' },
+            { id: 14, absen: 13, nama: 'CLARA JECKLYN PRISKILA AGAKI', kelas: namaKelas, instagram: 'cllaraaaaa____', daerah: 'Sorong', foto: 'images/clara.jpg' },
+            { id: 15, absen: 14, nama: 'DAVID AZKA FAUZAN', kelas: namaKelas, instagram: 'dapidjoest4r', daerah: 'Bojonegoro', foto: 'images/dapid.jpg' },
+            { id: 16, absen: 15, nama: 'ELSA HANUM PATRISYA', kelas: namaKelas, instagram: 'elsahanum__', daerah: 'Bojonegoro', foto: 'images/elsa.jpg' },
+            { id: 17, absen: 16, nama: 'FARDHAN TYNO GEMILANG PRATAMA', kelas: namaKelas, instagram: 'fardhonnn', daerah: 'Cepu', foto: 'images/fardhan.jpg' },
+            { id: 18, absen: 17, nama: 'FARIDA DWI CAHYANI', kelas: namaKelas, instagram: 'farida_dcyn', daerah: 'Purwodadi', foto: 'images/farida.jpg' },
+            { id: 19, absen: 18, nama: 'FATIH JANITRA', kelas: namaKelas, instagram: 'fatihjanitra', daerah: 'Kedungtuban', foto: 'images/fatih.jpg' },
+            { id: 20, absen: 19, nama: 'FIRMANSYAH ARTA MIRZA', kelas: namaKelas, instagram: 'firmanarkii_', daerah: 'Lamongan', foto: 'images/firman.jpg' },
+            { id: 21, absen: 20, nama: 'HASNA NUR AULIA', kelas: namaKelas, instagram: '444hazznn', daerah: 'Bekasi', foto: 'images/hasna.jpg' },
+            { id: 22, absen: 21, nama: 'KEZIA ARTA ULI SIBARANI', kelas: namaKelas, instagram: '', daerah: 'Sorong', foto: 'images/kezia.jpg' },
+            { id: 23, absen: 22, nama: 'KRISTIAN JUNIOR', kelas: namaKelas, instagram: 'krstianjunr', daerah: 'Sidoarjo', foto: 'images/kristian.jpg' },
+            { id: 24, absen: 23, nama: 'MELATI WAHYU PUTRI ANDINI', kelas: namaKelas, instagram: '', daerah: 'Lampung', foto: 'images/melati.jpg' },
+            { id: 25, absen: 24, nama: 'MUHAMMAD ATHA ULAYYA', kelas: namaKelas, instagram: 'ulayyamhmd', daerah: 'Tuban', foto: 'images/atha.jpg' },
+            { id: 26, absen: 25, nama: 'MUHAMMAD RADITYA NUR RAMADHAN', kelas: namaKelas, instagram: 'radityaramadhan312', daerah: 'Padangan', foto: 'images/rama.jpg' },
+            { id: 27, absen: 26, nama: 'MYIESHA NAFEEZA AYU ALFAHRIL', kelas: namaKelas, instagram: 'meysanfaa', daerah: 'Gresik', foto: 'images/meysa.jpg' },
+            { id: 28, absen: 27, nama: 'NARENDRA DIAZ PUTRA REFALDO', kelas: namaKelas, instagram: 'narendraaldo321', daerah: 'Padangan', foto: 'images/aldo.jpg' },
+            { id: 29, absen: 28, nama: 'NAZYA KHAYLA MAYESA', kelas: namaKelas, instagram: 'wh0isn4yy_', daerah: 'Jakarta', foto: 'images/nazya.jpg' },
+            { id: 30, absen: 29, nama: 'RAIHAN JAVAS NARARYA', kelas: namaKelas, instagram: 'jvs_rcg880', daerah: 'Jogjakarta', foto: 'images/javas.jpg' },
+            { id: 31, absen: 30, nama: 'RIZKY ANGGI SASONGKO', kelas: namaKelas, instagram: 'cyuu87_', daerah: 'Tegal', foto: 'images/anggi.jpg' },
+            { id: 32, absen: 31, nama: 'RIZQIKA ANZA KHAIRUNNISA', kelas: namaKelas, instagram: 'rizqikaaaaaa', daerah: 'Banten', foto: 'images/rizqika.jpg' },
+            { id: 33, absen: 32, nama: 'SAMUEL VICTORIO RICHIE PUTRA SINGH', kelas: namaKelas, instagram: 'iooorawr', daerah: 'Cepu', foto: 'images/rio.jpg' },
+            { id: 34, absen: 33, nama: 'TAKBIR FAJAR UTOMO', kelas: namaKelas, instagram: 'xyl.comm', daerah: 'Bojonegoro', foto: 'images/takbir.jpg' },
+            { id: 35, absen: 34, nama: 'TERA RIFAEL MAMBRASAR', kelas: namaKelas, instagram: 'rafael_mbrasar', daerah: 'Raja Ampat', foto: 'images/tera.jpg' },
+            { id: 36, absen: 35, nama: 'WAHYU FARICH NURIL ICHSAN', kelas: namaKelas, instagram: 'witchh132', daerah: 'Kedungtuban', foto: 'images/wahyu.jpg' },
+        ];
+
+        
+        const homePage = document.getElementById('home-page');
+        const detailPage = document.getElementById('detail-page');
+        const waliKelasCardContainer = document.getElementById('wali-kelas-card-container');
+        const memberList = document.getElementById('member-list');
+        const backButton = document.getElementById('back-button');
+        
+        const detailAvatar = document.getElementById('detail-avatar');
+        const detailNama = document.getElementById('detail-nama');
+        const detailKelas = document.getElementById('detail-kelas');
+        const detailAbsen = document.getElementById('detail-absen');
+        const detailDaerah = document.getElementById('detail-daerah');
+        const detailInstagram = document.getElementById('detail-instagram');
+
+        const daerahNameFact = document.getElementById('daerah-name-fact');
+        const aiFactButton = document.getElementById('ai-fact-button');
+        const aiFactResultContainer = document.getElementById('ai-fact-result-container');
+        const aiFactLoading = document.getElementById('ai-fact-loading');
+        const aiFactText = document.getElementById('ai-fact-text');
+
+        let currentDaerah = '';
+
+        
+
+        function renderHomePage() {
+            
+            waliKelasCardContainer.innerHTML = '';
+            memberList.innerHTML = '';
+            
+            
+            const waliKelas = anggotaKelas.find(a => a.absen === 'Wali Kelas');
+            const siswa = anggotaKelas.filter(a => a.absen !== 'Wali Kelas');
+
+            
+            if (waliKelas) {
+                const card = document.createElement('div');
+                card.className = 'bg-white/80 backdrop-blur-sm border border-white/50 rounded-lg shadow-lg p-5 w-full max-w-xs cursor-pointer transition-transform transform hover:-translate-y-1 flex flex-col items-center';
+                card.onclick = () => showDetailPage(waliKelas.id);
+                card.innerHTML = `
+                    <img src="${waliKelas.foto}" alt="${waliKelas.nama}" class="w-20 h-20 rounded-full object-cover mx-auto mb-3 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/80x80/928DAB/FFFFFF?text=Error';">
+                    <h3 class="font-bold text-lg text-[#1F1C2D]">${waliKelas.nama}</h3>
+                    <p class="text-md text-[#1F1C2D]/80">${waliKelas.absen}</p>
+                `;
+                waliKelasCardContainer.appendChild(card);
+            }
+
+            
+            siswa.forEach(anggota => {
+                const card = document.createElement('div');
+                card.className = 'bg-white/80 backdrop-blur-sm border border-white/50 rounded-lg shadow p-4 text-center cursor-pointer transition-transform transform hover:-translate-y-1 hover:shadow-lg';
+                card.onclick = () => showDetailPage(anggota.id);
+                const absenText = `No. ${anggota.absen}`;
+                card.innerHTML = `
+                    <img src="${anggota.foto}" alt="${anggota.nama}" class="w-16 h-16 rounded-full object-cover mx-auto mb-3" onerror="this.onerror=null;this.src='https://placehold.co/64x64/D4D2DE/1F1C2D?text=Error';">
+                    <h3 class="font-semibold text-[#1F1C2D] truncate">${anggota.nama.split(',')[0]}</h3>
+                    <p class="text-sm text-[#1F1C2D]/70">${absenText}</p>
+                `;
+                memberList.appendChild(card);
+            });
+        }
+
+        function showDetailPage(id) {
+            const anggota = anggotaKelas.find(a => a.id === id);
+            if (!anggota) return;
+
+            currentDaerah = anggota.daerah;
+
+            
+            detailAvatar.innerHTML = `<img src="${anggota.foto}" alt="${anggota.nama}" class="w-full h-full rounded-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/128x128/928DAB/FFFFFF?text=Error';">`;
+            
+            detailNama.textContent = anggota.nama;
+            detailKelas.textContent = anggota.kelas;
+            detailAbsen.textContent = anggota.absen;
+            detailDaerah.textContent = anggota.daerah;
+            detailInstagram.textContent = `@${anggota.instagram}`;
+            detailInstagram.href = `https://instagram.com/${anggota.instagram}`;
+            daerahNameFact.textContent = anggota.daerah;
+
+            
+            aiFactResultContainer.classList.add('hidden');
+            aiFactText.textContent = '';
+            aiFactButton.classList.remove('hidden');
+
+            homePage.classList.add('hidden');
+            detailPage.classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function showHomePage() {
+            detailPage.classList.add('hidden');
+            homePage.classList.remove('hidden');
+        }
+
+        async function callGeminiAPI(prompt) {
+            const payload = {
+                contents: [{ role: "user", parts: [{ text: prompt }] }]
+            };
+            const apiKey = "AIzaSyBVYczKjB-03AxcIoVOdDjGANzxU4F2xMk"; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            if (result.candidates && result.candidates.length > 0 &&
+                result.candidates[0].content && result.candidates[0].content.parts &&
+                result.candidates[0].content.parts.length > 0) {
+                return result.candidates[0].content.parts[0].text;
+            } else {
+                if (result.promptFeedback && result.promptFeedback.blockReason) {
+                     throw new Error(`Permintaan diblokir: ${result.promptFeedback.blockReason}`);
+                }
+                throw new Error("Respons AI tidak valid atau kosong.");
+            }
+        }
+
+        async function getUniqueFact() {
+            if (!currentDaerah) return;
+
+           
+            aiFactButton.classList.add('hidden');
+            aiFactResultContainer.classList.remove('hidden');
+            aiFactLoading.classList.remove('hidden');
+            aiFactText.textContent = '';
+
+            const prompt = `Berikan satu fakta unik dan menarik tentang daerah "${currentDaerah}" di Indonesia. Jelaskan secara singkat dalam 1-2 kalimat dalam Bahasa Indonesia.`;
+            
+            try {
+                const fact = await callGeminiAPI(prompt);
+                aiFactText.textContent = fact;
+            } catch (error) {
+                console.error("Error fetching AI fact:", error);
+                aiFactText.textContent = `Terjadi kesalahan: ${error.message}. Coba lagi nanti.`;
+            } finally {
+             
+                aiFactLoading.classList.add('hidden');
+                aiFactButton.classList.remove('hidden');
+            }
+        }
+
+        
+        backButton.addEventListener('click', showHomePage);
+        aiFactButton.addEventListener('click', getUniqueFact);
+
+       
+        renderHomePage();
+
+    </script>
+</body>
+</html>
